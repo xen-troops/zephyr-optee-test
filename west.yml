@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  self:
+    path: zephyr-optee-test
+
+  remotes:
+    - name: xentroops
+      url-base: https://github.com/xen-troops
+
+    - name: zephyr
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: xentroops
+      revision: zephyr-v3.3.0-xt
+      west-commands: scripts/west-commands.yml
+
+    - name: zephyr-optee-client
+      remote: xentroops
+      revision: master
+
+    - name: littlefs
+      remote: zephyr
+      path: modules/fs/littlefs
+      groups:
+        - fs
+      revision: ca583fd297ceb48bced3c2548600dc615d67af24
