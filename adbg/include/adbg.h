@@ -47,7 +47,7 @@
 	Do_ADBG_ExpectPointer(c, __FILE__, __LINE__, Expected, Got, #Got)
 
 #define ADBG_EXPECT_NOT_NULL(c, Got) \
-	Do_ADBG_ExpectPointerNotNULL(__FILE__, __LINE__, Got, #Got)
+	Do_ADBG_ExpectPointerNotNULL(c, __FILE__, __LINE__, Got, #Got)
 
 #define ADBG_EXPECT_COMPARE_SIGNED(c, Val1, Compar, Val2) \
 	Do_ADBG_ExpectCompareSigned(c, __FILE__, __LINE__, \
@@ -71,10 +71,27 @@
 #define ADBG_EXPECT_TEEC_SUCCESS(c, got) \
 	ADBG_EXPECT_ENUM(c, TEEC_SUCCESS, got)
 
+#define ADBG_EXPECT_TEEC_ERROR_ORIGIN(c, exp, got) \
+	ADBG_EXPECT_ENUM(c, exp, got)
+
+#define ADBG_EXPECT_CK_RESULT(c, exp, got) \
+	ADBG_EXPECT_ENUM(c, exp, got)
+
+#define ADBG_EXPECT_CK_OK(c, got) \
+	ADBG_EXPECT_ENUM(c, CKR_OK, got)
+
 struct ADBG_Case {
-	const char *header;
+	const char *name;
 	bool success;
 };
+typedef struct ADBG_Case ADBG_Case_t;
+
+#define ADBG_STRUCT_DECLARE(test_name)                 \
+	struct ADBG_Case c = {                         \
+		.name = test_name,                     \
+		.success = true,                       \
+	};                                             \
+	printk("--== %s ==--\n", c.name)
 
 void ADBG_Assert(struct ADBG_Case *c);
 
