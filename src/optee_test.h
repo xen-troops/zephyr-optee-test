@@ -66,8 +66,13 @@ extern const TEEC_UUID subkey2_ta_uuid;
 
 void BeginTest(const char *msg);
 void EndTest(const char *msg);
-void BeginSubCase(const char *msg);
-void EndSubCase(const char *msg);
+void BeginSubCase(const char *format, ...);
+void EndSubCase(const char *format, ...);
+
+#define Do_ADBG_BeginSubCase(c, format, ...) BeginSubCase(format, ##__VA_ARGS__)
+#define Do_ADBG_EndSubCase(c, format, ...) EndSubCase(format, ##__VA_ARGS__)
+
+extern unsigned int level;
 
 TEEC_Result xtest_teec_ctx_init(void);
 TEEC_Result xtest_teec_open_session(TEEC_Session *session,
