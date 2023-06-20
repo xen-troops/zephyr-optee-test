@@ -144,6 +144,14 @@ bool Do_ADBG_ExpectComparePointer(struct ADBG_Case *c, const char *const FileNam
 				  const char *const Value2Str_p);
 
 /**
+ * Writes a string to output.
+ * String length max is defined by ADBG_STRING_LENGTH_MAX
+ *
+ * @param Format_p The formatting string as in printf
+ */
+void Do_ADBG_Log(const char *const Format_p, ...);
+
+/**
  * Writes out the contents of buf_p formatted so that each line will
  * have cols number of columns.
  *
