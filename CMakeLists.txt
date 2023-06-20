@@ -15,6 +15,7 @@ zephyr_include_directories(adbg/include)
 
 zephyr_library_include_directories(include)
 zephyr_library_sources(src/optee_test.c)
+zephyr_library_sources(src/xtest_helpers.c)
 
 zephyr_library_sources(src/regression_1000.c)
 zephyr_library_sources(src/pkcs11_1000.c)
