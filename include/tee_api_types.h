@@ -95,8 +95,8 @@ typedef struct {
 	uint32_t objectSize;
 	uint32_t maxObjectSize;
 	uint32_t objectUsage;
-	size_t dataSize;
-	size_t dataPosition;
+	uint32_t dataSize;
+	uint32_t dataPosition;
 	uint32_t handleFlags;
 } TEE_ObjectInfo;
 
