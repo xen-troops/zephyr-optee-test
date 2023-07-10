@@ -1392,10 +1392,13 @@ ZTEST(regression_1000, test_1020)
 	res = xtest_teec_open_session(&session, &pta_invoke_tests_ta_uuid, NULL, &ret_orig);
 	if (res == TEEC_ERROR_ITEM_NOT_FOUND) {
 		printk(" - 1020 -   skip test, pseudo TA not found\n");
+		return;
+	}
+
+	if (!ADBG_EXPECT_TEEC_SUCCESS(&c, res)) {
 		ADBG_Assert(&c);
 		return;
 	}
-	ADBG_EXPECT_TEEC_SUCCESS(&c, res);
 
 	res = TEEC_InvokeCommand(&session, PTA_INVOKE_TESTS_CMD_LOCKDEP,
 				 NULL, &ret_orig);
