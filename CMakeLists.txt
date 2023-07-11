@@ -22,6 +22,7 @@ zephyr_library_sources(src/pkcs11_1000.c)
 zephyr_library_sources(src/regression_4000.c)
 zephyr_library_sources(src/regression_4100.c)
 zephyr_library_sources(src/regression_6000.c)
+zephyr_library_sources(src/regression_8000.c)
 # ######################################################################################################################
 # External libs
 # ######################################################################################################################
