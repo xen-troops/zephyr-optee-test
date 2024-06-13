@@ -17,7 +17,6 @@
 #include <tee_api_defines_extensions.h>
 #include <ta_crypt.h>
 #include <utee_defines.h>
-#include <util.h>
 
 #include "regression_4000_data.h"
 #include "nist/186-2ecdsatestvectors.h"
