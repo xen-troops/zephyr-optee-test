@@ -1940,6 +1940,18 @@ exit:
 	ADBG_Assert(&c);
 }
 
+/*
+ * NOTE: Allocate big buffer in a global section because there is a risk
+ * that if there is not enough stack size - it may overwrite globals needed
+ * for ZTEST. The corruption of failed_expectation and test_result globals
+ * was observed.
+ * With test_result the corruption isn't significant because it is overwritten
+ * right after test finish. But failed_expectation corruption causing weird
+ * behavior when Test was passed but it is marked as failed.
+ */
+#define TEST_BLK_SIZE 1024
+static uint8_t block[32 * TEST_BLK_SIZE] = { };
+
 ZTEST(regression_6000, test_6018)
 {
 	uint32_t storage_id = TEE_STORAGE_PRIVATE_REE;
@@ -1950,18 +1962,16 @@ ZTEST(regression_6000, test_6018)
 	TEE_ObjectInfo obj_info2 = { };
 	uint32_t obj = 0;
 	uint32_t orig = 0;
-	uint8_t block[32 * 1024] = { };
 	size_t num_blocks = 0;
-	size_t block_size = 0;
+	size_t block_size = TEST_BLK_SIZE;
 	size_t n = 0;
-
+	uint8_t br[TEST_BLK_SIZE];
+	uint32_t count = 0;
 	if (storage_is(storage_id, TEE_STORAGE_PRIVATE_RPMB)) {
 		/* RPMB FS is a bit resource constrained */
 		num_blocks = 10;
-		block_size = 1024;
 	} else {
 		num_blocks = 20;
-		block_size = sizeof(block);
 	}
 
 	if (!ADBG_EXPECT_TEEC_SUCCESS(&c,
@@ -2014,8 +2024,7 @@ ZTEST(regression_6000, test_6018)
 		goto exit;
 
 	for (n = 0; n < num_blocks; n++) {
-		uint8_t br[block_size];
-		uint32_t count = 0;
+		count = 0;
 
 		memset(br, 0, sizeof(br));
 		memset(block, n, block_size);
@@ -2031,7 +2040,6 @@ ZTEST(regression_6000, test_6018)
 	/* clean */
 	if (!ADBG_EXPECT_TEEC_SUCCESS(&c, _fs_unlink(&sess, obj)))
 		goto exit;
-
 exit:
 	TEEC_CloseSession(&sess);
 	ADBG_Assert(&c);
