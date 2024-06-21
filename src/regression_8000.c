@@ -323,7 +323,7 @@ void *regression_8000_init(void)
 void regression_8000_deinit(void *param)
 {
 	(void)param;
-	printk("End Test suite 4100\n");
+	printk("End Test suite 8000\n");
 	TEEC_FinalizeContext(&xtest_teec_ctx);
 }
 
