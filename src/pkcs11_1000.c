@@ -3459,6 +3459,24 @@ ZTEST(pkcs11_1000, test_1013)
 	ADBG_Assert(&c);
 }
 
+/*
+ * FIXME: Define global attribute values in the global section because
+ * strange behavior was observed when they where xtest_pkcs11_test_1014
+ * local variables:
+ *  g_decrypt value is false after getting attributes from Optee-OS when
+ *  setting for CKA_DECRYPT is true and Optee-OS returns true.
+ *  This issue is related only to g_decrypt value because if switch it
+ *  places with g_sign or g_encrypt variables we still get
+ *  g_decrypt = false. Increasing STACK in prj.conf gave nothing.
+ */
+CK_BBOOL g_derive = CK_FALSE;
+CK_BBOOL g_sign = CK_FALSE;
+CK_BBOOL g_verify = CK_FALSE;
+CK_BBOOL g_encrypt = CK_FALSE;
+CK_BBOOL g_decrypt = CK_FALSE;
+CK_BBOOL g_wrap = CK_FALSE;
+CK_BBOOL g_unwrap = CK_FALSE;
+
 static void xtest_pkcs11_test_1014(ADBG_Case_t *c)
 {
 	CK_RV rv = CKR_GENERAL_ERROR;
@@ -3495,13 +3513,6 @@ static void xtest_pkcs11_test_1014(ADBG_Case_t *c)
 		{ CKA_ALLOWED_MECHANISMS, secret_allowed_mecha,
 		  sizeof(secret_allowed_mecha) },
 	};
-	CK_BBOOL g_derive = CK_FALSE;
-	CK_BBOOL g_sign = CK_FALSE;
-	CK_BBOOL g_verify = CK_FALSE;
-	CK_BBOOL g_encrypt = CK_FALSE;
-	CK_BBOOL g_decrypt = CK_FALSE;
-	CK_BBOOL g_wrap = CK_FALSE;
-	CK_BBOOL g_unwrap = CK_FALSE;
 	uint32_t g_len = 0;
 	CK_ATTRIBUTE get_template[] = {
 		{ CKA_LABEL, (CK_UTF8CHAR_PTR)g_label, sizeof(g_label) },
