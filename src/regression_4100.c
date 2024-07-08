@@ -13,7 +13,7 @@
 #include <string.h>
 #include <ta_crypt.h>
 #include <tee_api_types.h>
-#include <util.h>
+#include <zephyr/sys/util.h>
 
 #include "optee_test.h"
 #include "xtest_helpers.h"
