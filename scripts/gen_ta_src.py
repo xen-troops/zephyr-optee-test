@@ -24,6 +24,7 @@ To use lookup table in application genarated files just should be build with app
 import os
 import argparse
 import uuid
+import sys
 
 def read_uuids_file(enabled_file):
     uuids = []
