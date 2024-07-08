@@ -69,8 +69,7 @@ if(TA_DEPLOY_DIR)
                 -g ${GENERATED_DIRECTORY}
     )
     include_directories(app PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${TA_BIN_DIRECTORY})
-    target_sources(app PRIVATE
-        ${GENERATED_DIRECTORY}/ta_table.c
-        ${GENERATED_DIRECTORY}/ta_table.S
-    )
+    zephyr_library_sources(${GENERATED_DIRECTORY}/ta_table.c)
+    zephyr_library_sources(${GENERATED_DIRECTORY}/ta_table.S)
+
 endif()
