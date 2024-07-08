@@ -45,7 +45,7 @@ def generate_c(uuids, output, tablename):
     for u in uuids:
         uuid_str = str(u).replace('-', '_')
         file.write(f"extern unsigned char __ta_{uuid_str}_start[];\n")
-        file.write(f"extern size_t __ta_{uuid_str}_size;\n")
+        file.write(f"extern unsigned char __ta_{uuid_str}_end[];\n")
     file.write(f'\nstruct ta_table {tablename}[] = ' + '{\n')
     for u in uuids:
         uuid_str = str(u).replace('-', '_')
@@ -56,7 +56,7 @@ def generate_c(uuids, output, tablename):
     for u in uuids:
         uuid_str = str(u).replace('-', '_')
         file.write(f'\t{tablename}[{i}].ta_start = __ta_{uuid_str}_start;\n')
-        file.write(f'\t{tablename}[{i}].ta_size = __ta_{uuid_str}_size;\n')
+        file.write(f'\t{tablename}[{i}].ta_size = __ta_{uuid_str}_end - __ta_{uuid_str}_start;\n')
         i += 1
     file.write(f'\n\tTEEC_SetTATable({tablename});\n\treturn 0;\n')
     file.write("}\n\n")
@@ -72,11 +72,11 @@ def genarate_asm(uuids, output):
         uuid_str = str(u).replace('-', '_')
         file.write(f'.section .data.ta_{uuid_str},"a"\n')
         file.write(f'GDATA(__ta_{uuid_str}_start)\n')
-        file.write(f'GDATA(__ta_{uuid_str}_size)\n')
+        file.write(f'GDATA(__ta_{uuid_str}_end)\n')
         file.write(f'.align 8\n')
         file.write(f'__ta_{uuid_str}_start:\n')
         file.write(f'.incbin  "{str(u)}.ta"\n')
-        file.write(f'__ta_{uuid_str}_size: .long . - __ta_{uuid_str}_start\n\n')
+        file.write(f'__ta_{uuid_str}_end: \n\n')
     file.close()
 
 def main():
