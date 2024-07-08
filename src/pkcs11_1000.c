@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <utee_defines.h>
-#include <util.h>
+#include <zephyr/sys/util.h>
 
 #include "optee_test.h"
 #include "xtest_helpers.h"
