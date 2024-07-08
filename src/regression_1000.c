@@ -620,7 +620,7 @@ ZTEST(regression_1000, test_1008)
 
 	BeginSubCase("Load corrupt TA");
 	printk("=============  Skipped =============\n");
-//	test_1008_corrupt_ta(c);
+	/* TODO: Implement this test case */
 	EndSubCase("Load corrupt TA");
 	ADBG_Assert(&c);
 }
