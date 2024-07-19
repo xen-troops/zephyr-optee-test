@@ -14,7 +14,7 @@ manifest:
   projects:
     - name: zephyr
       remote: xentroops
-      revision: zephyr-v3.3.0-xt
+      revision: zephyr-v3.6.0-xt
       west-commands: scripts/west-commands.yml
 
     - name: zephyr-optee-client
